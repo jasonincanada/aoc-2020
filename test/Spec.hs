@@ -1,8 +1,10 @@
 import Control.Arrow   ((>>>), (&&&))
 import Test.Hspec
+import NanoParsec
 
 import Day02
 import Day03
+import Day04
 
 
 path = "test/inputs/"
@@ -30,4 +32,37 @@ main = hspec $ do
     it "Part 2" $ do
       file <- readFile (path ++ "3.txt")
       (Day03.parse >>> Day03.calc2 >>> show) file `shouldBe` "336"
+
+
+  describe "Day04" $ do
+
+    it "Part 1" $ do
+      file <- readFile (path ++ "4.txt")
+      (Day04.parse1 >>> Day04.calc1 >>> show) file `shouldBe` "2"
+
+    it "Part 2" $ do
+      file <- readFile (path ++ "4.txt")
+      (Day04.parse2 >>> Day04.calc2 >>> show) file `shouldBe` "2"
+
+    it "birthYear valid"   $ try birthYear "byr:2002" `shouldBe` (Just $ Byr 2002)
+    it "birthYear invalid" $ try birthYear "byr:2003" `shouldBe` Nothing
+    it "birthYear invalid" $ try birthYear "byr:1919" `shouldBe` Nothing
+
+    it "height cm valid"   $ try height "hgt:150cm" `shouldBe` (Just $ Hgt 150 CM)
+    it "height cm invalid" $ try height "hgt:194cm" `shouldBe` Nothing
+    it "height in valid"   $ try height "hgt:59in"  `shouldBe` (Just $ Hgt 59 IN)
+    it "height in invalid" $ try height "hgt:77in"  `shouldBe` Nothing
+
+    it "hairColor valid"   $ try hairColor "hcl:#123abc" `shouldBe` (Just $ Hcl "123abc")
+    it "hairColor invalid" $ try hairColor "hcl:#123abz" `shouldBe` Nothing
+    it "hairColor invalid" $ try hairColor "hcl:123abc"  `shouldBe` Nothing
+
+    it "eyeColor valid"    $ try eyeColor "ecl:amb" `shouldBe` (Just $ Ecl "amb")
+    it "eyeColor invalid"  $ try eyeColor "ecl:wat" `shouldBe` Nothing
+
+    it "passport valid"    $ try passport "pid:000000001"  `shouldBe` (Just $ Pid "000000001")
+    it "passport invalid"  $ try passport "pid:0123456789" `shouldBe` Nothing
+
+    it "country valid"     $ try country "cid:11" `shouldBe` (Just $ Cid 11)
+
 
