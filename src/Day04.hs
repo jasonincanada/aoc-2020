@@ -11,8 +11,6 @@ import NanoParsec
 
 {- Types -}
 
-type Passport = [[String]]
-
 data Field    = Byr Int       -- birth year
               | Iyr Int       -- issue year
               | Eyr Int       -- expiration year
