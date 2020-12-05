@@ -5,6 +5,7 @@ import NanoParsec
 import Day02
 import Day03
 import Day04
+import Day05
 
 
 path = "test/inputs/"
@@ -64,5 +65,13 @@ main = hspec $ do
     it "passport invalid"  $ try passport "pid:0123456789" `shouldBe` Nothing
 
     it "country valid"     $ try country "cid:11" `shouldBe` (Just $ Cid 11)
+
+
+  describe "Day05" $ do
+
+    it "decode 1" ( Day05.decode "FBFBBFFRLR" `shouldBe` 357)
+    it "decode 2" ( Day05.decode "BFFFBBFRRR" `shouldBe` 567)
+    it "decode 3" ( Day05.decode "FFFBBBFRRR" `shouldBe` 119)
+    it "decode 4" ( Day05.decode "BBFFBBFRLL" `shouldBe` 820)
 
 
