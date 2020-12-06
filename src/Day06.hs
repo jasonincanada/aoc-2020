@@ -10,7 +10,9 @@ import Data.List.Split (splitOn)
 
 {- Types -}
 
-type Input   = [[String]]
+type Group   = [String]
+type Input   = [Group]
+
 data Output  = Output Int
 
 instance Show Output where
@@ -34,7 +36,7 @@ calc2 = Output . sum . map tally
     -- count the number of times the number of declarants in the group
     -- equals (==) the number of yes answers for a given topic, meaning everyone
     -- in that group answered yes to that topic
-    tally :: [String] -> Int
+    tally :: Group -> Int
     tally = length &&& map length . group . sort . concat   -- (Int        , [Int])
               >>> first (==)                                -- (Int -> Bool, [Int])
               >>> uncurry filter                            -- [Int]
