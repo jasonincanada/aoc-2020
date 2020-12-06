@@ -33,7 +33,7 @@ calc1 = Output . sum . map (length . group . sort . concat)
 calc2 :: Input -> Output
 calc2 = Output . sum . map tally
   where
-    -- count the number of times the number of declarants in the group
+    -- count the number of times the number of people in the group
     -- equals (==) the number of yes answers for a given topic, meaning everyone
     -- in that group answered yes to that topic
     tally :: Group -> Int
