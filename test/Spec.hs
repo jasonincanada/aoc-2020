@@ -6,6 +6,7 @@ import Day02
 import Day03
 import Day04
 import Day05
+import Day06
 
 
 path = "test/inputs/"
@@ -75,3 +76,12 @@ main = hspec $ do
     it "decode 4" ( Day05.decode "BBFFBBFRLL" `shouldBe` 820)
 
 
+  describe "Day06" $ do
+
+    it "Part 1" $ do
+      file <- readFile (path ++ "6.txt")
+      (Day06.parse >>> Day06.calc1 >>> show) file `shouldBe` "11"
+
+    it "Part 2" $ do
+      file <- readFile (path ++ "6.txt")
+      (Day06.parse >>> Day06.calc2 >>> show) file `shouldBe` "6"
