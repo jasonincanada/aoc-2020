@@ -28,7 +28,6 @@ parse = splitOn [""] . lines
 calc1 :: Input -> Output
 calc1 = Output . sum . map (length . group . sort . concat)
 
-
 calc2 :: Input -> Output
 calc2 = Output . sum . map tally
   where
@@ -39,7 +38,6 @@ calc2 = Output . sum . map tally
               >>> first (==)                                -- (Int -> Bool, [Int])
               >>> uncurry filter                            -- [Int]
               >>> length
-
 
     -- λ> :set -XTypeApplications
     --
@@ -52,7 +50,6 @@ calc2 = Output . sum . map tally
 
     -- uncurry :: (a -> b -> c) -> (a, b) -> c
     -- filter  :: (a -> Bool) -> [a] -> [a]
-
 
 
 {- Operations -}
