@@ -3,6 +3,7 @@ module Day07 where
 {-  Advent of Code 2020 - Day 7 - https://adventofcode.com/2020/day/7 -}
 
 import qualified Data.Set as S
+import Data.Set (empty, fromList, singleton, size, union)
 
 
 {- Types -}
@@ -42,14 +43,14 @@ parse = map (bag . words . clean) . lines
 calc1 :: Input -> Output
 calc1 bags = Output count
   where
-    count  = S.size $ parents $ S.singleton "shiny gold"
-    bagset = S.fromList bags
+    count  = size $ parents $ singleton "shiny gold"
+    bagset = fromList bags
 
     parents :: S.Set Color -> S.Set Color
-    parents colors = let these = foldr S.union S.empty (S.map f colors)
-                     in  if these == S.empty
-                         then S.empty
-                         else S.union these (parents these)
+    parents colors = let these = foldr union empty (S.map f colors)
+                     in  if these == empty
+                         then empty
+                         else union these (parents these)
 
     -- get the set of colors that contain this one
     f :: Color -> S.Set Color
