@@ -9,6 +9,7 @@ import qualified Data.Set as S
 
 type Color   = String
 data Bag     = Bag Color [(Int,Color)]
+               deriving (Eq, Ord)
 
 type Input   = [Bag]
 data Output  = Output Int
@@ -41,26 +42,24 @@ parse = map (bag . words . clean) . lines
 calc1 :: Input -> Output
 calc1 bags = Output count
   where
-    count = length $ parents ["shiny gold"]
+    count = S.size $ parents $ S.singleton "shiny gold"
+    bagset = S.fromList bags
 
-    parents :: [Color] -> [Color]
-    parents colors = let these = dedupe $ concatMap f colors
-                     in  if null these
-                         then []
-                         else these ++ dedupe (parents these)
+    parents :: S.Set Color -> S.Set Color
+    parents colors = let these = foldr S.union S.empty (S.map f colors)
+                     in  if these == S.empty
+                         then S.empty
+                         else S.union these (parents these)
 
-    -- get the list of colors that contain this one
-    f :: Color -> [Color]
-    f color = map getcolor $ filter (contains color) bags
+    -- get the set of colors that contain this one
+    f :: Color -> S.Set Color
+    f color = S.map getcolor $ S.filter (contains color) bagset
       where
         contains :: Color -> Bag -> Bool
         contains color (Bag _ cont) = color `elem` map snd cont
 
         getcolor :: Bag -> Color
         getcolor (Bag c _) = c
-
-    dedupe :: Ord a => [a] -> [a]
-    dedupe = S.toList . S.fromList
 
 
 
