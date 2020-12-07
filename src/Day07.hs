@@ -42,7 +42,7 @@ parse = map (bag . words . clean) . lines
 calc1 :: Input -> Output
 calc1 bags = Output count
   where
-    count = S.size $ parents $ S.singleton "shiny gold"
+    count  = S.size $ parents $ S.singleton "shiny gold"
     bagset = S.fromList bags
 
     parents :: S.Set Color -> S.Set Color
