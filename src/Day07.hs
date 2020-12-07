@@ -50,7 +50,7 @@ calc1 bags = Output count
     parents colors = let these = foldr union empty (S.map f colors)
                      in  if these == empty
                          then empty
-                         else union these (parents these)
+                         else these `union` parents these
 
     -- get the set of colors that contain this one
     f :: Color -> S.Set Color
