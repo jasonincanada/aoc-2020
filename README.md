@@ -6,6 +6,7 @@ Don't forget to visit the Advent of Code sub-reddit for discussions and other pa
 
 Day | Title | Description
 --- | --- | ---
+9 | [Encoding Error](./src/Day09.hs) | Find sums in a list
 8 | [Handheld Halting](./src/Day08.hs) | Check termination conditions in a program
 7 | [Handy Haversacks](./src/Day07.hs) | Luggage inventory and processing
 6 | [Custom Customs](./src/Day06.hs) | Tally results of customs declarations surveys
