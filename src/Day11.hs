@@ -44,7 +44,7 @@ parse = M.fromList
 calc1 :: Input -> Output
 calc1 seatmap = Output result
   where
-    result = count 4 seatmap getneighbours
+    result = count 4 getneighbours seatmap
 
     getneighbours :: SeatMap -> Pos -> [Kind]
     getneighbours seatmap pos = mapMaybe (`M.lookup` seatmap) (neighbours pos)
@@ -62,7 +62,7 @@ type Ray = (Int->Int, Int->Int)
 calc2 :: Input -> Output
 calc2 seatmap = Output result
   where
-    result = count 5 seatmap hits
+    result = count 5 hits seatmap
 
     hits :: SeatMap -> Pos -> [Kind]
     hits seatmap pos = mapMaybe (go pos) rays
@@ -84,11 +84,11 @@ calc2 seatmap = Output result
             nop = (+0)
 
 
-count :: Int -> SeatMap -> (SeatMap -> Pos -> [Kind]) -> Int
-count l seatmap getneighbours = let seatmap' = nextmap
+count :: Int -> (SeatMap -> Pos -> [Kind]) -> SeatMap -> Int
+count l getneighbours seatmap = let seatmap' = nextmap
                                 in  if seatmap == seatmap'
                                     then M.size $ M.filter (=='#') seatmap
-                                    else count l seatmap' getneighbours
+                                    else count l getneighbours seatmap'
   where
     nextmap :: SeatMap
     nextmap = M.fromList [ (pos, nextseat pos) | pos <- M.keys seatmap ]
