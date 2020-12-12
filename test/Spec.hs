@@ -11,6 +11,7 @@ import Day07
 import Day08 hiding (path)
 import Day09
 import Day10
+import Day11
 
 
 path = "test/inputs/"
@@ -140,4 +141,11 @@ main = hspec $ do
       (Day10.parse >>> Day10.calc2 >>> show) file `shouldBe` "0"
 -}
 
+
+
+  describe "Day11" $ do
+
+    it "Part 1" $ do
+      file <- readFile (path ++ "11.txt")
+      (Day11.parse >>> Day11.calc1 >>> show) file `shouldBe` "37"
 
