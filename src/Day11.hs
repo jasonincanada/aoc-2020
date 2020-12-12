@@ -58,7 +58,7 @@ calc1 seatmap = Output result
     neighbours :: Pos -> [Pos]
     neighbours pos = map (add pos) offsets
       where
-        add (x,y) (dx,dy) = (x+dx,y+dy)
+        add (row,col) (dr,dc) = (row+dr,col+dc)
 
     nextseat :: SeatMap -> Pos -> Char
     nextseat seatmap pos = let cell    = seatmap M.! pos
