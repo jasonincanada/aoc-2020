@@ -47,7 +47,7 @@ calc1 seatmap = Output result
     result     = count 4 seatmap getneighbours
 
     getneighbours :: SeatMap -> Pos -> [Kind]
-    getneighbours seatmap pos = mapMaybe (flip M.lookup seatmap) (neighbours pos)
+    getneighbours seatmap pos = mapMaybe (`M.lookup` seatmap) (neighbours pos)
 
     neighbours :: Pos -> [Pos]
     neighbours (row,col) = bimap (+row) (+col) <$> offsets
