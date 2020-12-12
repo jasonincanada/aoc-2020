@@ -83,10 +83,7 @@ type Ray = (Int->Int, Int->Int)
 calc2 :: Input -> Output
 calc2 seatmap = Output result
   where
-    result = count 5 seatmap getneighbours
-
-    getneighbours :: SeatMap -> Pos -> [Kind]
-    getneighbours seatmap pos = hits seatmap pos
+    result = count 5 seatmap hits
 
     hits :: SeatMap -> Pos -> [Kind]
     hits seatmap pos = mapMaybe (go pos) rays
