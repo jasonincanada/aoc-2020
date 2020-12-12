@@ -149,3 +149,7 @@ main = hspec $ do
       file <- readFile (path ++ "11.txt")
       (Day11.parse >>> Day11.calc1 >>> show) file `shouldBe` "37"
 
+    it "Part 2" $ do
+      file <- readFile (path ++ "11.txt")
+      (Day11.parse >>> Day11.calc2 >>> show) file `shouldBe` "26"
+

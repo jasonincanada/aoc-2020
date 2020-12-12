@@ -74,11 +74,51 @@ calc1 seatmap = Output result
     nextmap seatmap = M.fromList [ (pos, nextseat seatmap pos) | pos <- M.keys seatmap ]
 
 
+type Ray = (Int->Int, Int->Int)
 
 calc2 :: Input -> Output
 calc2 seatmap = Output result
   where
-    result = 0
+    result     = go seatmap
+
+    go :: SeatMap -> Int
+    go seatmap = let seatmap' = nextmap seatmap
+                 in  if seatmap == seatmap'
+                     then M.size $ M.filter (=='#') seatmap
+                     else go seatmap'
+
+    hits :: SeatMap -> Pos -> [Kind]
+    hits seatmap pos = mapMaybe (go pos) rays
+      where
+        go :: Pos -> Ray -> Maybe Kind
+        go (row,col) (fr,fc) = let next = (fr row, fc col)
+                               in  case M.lookup next seatmap of
+                                     Nothing  -> Nothing
+                                     Just '.' -> go next (fr,fc)
+                                     Just x   -> Just x
+
+        rays :: [Ray]
+        rays = [ (sub,sub), (sub,nop), (sub,add),
+                 (nop,sub),            (nop,add),
+                 (add,sub), (add,nop), (add,add) ]
+          where
+            sub = subtract 1
+            add = (+1)
+            nop = (+0)
+
+
+    nextseat :: SeatMap -> Pos -> Char
+    nextseat seatmap pos = let cell    = seatmap M.! pos
+                               neighbs = hits seatmap pos
+                               empty   = filter (=='L') neighbs
+                               occup   = filter (=='#') neighbs
+                           in  case cell of
+                                 'L' -> if null occup        then '#' else 'L'
+                                 '#' -> if length occup >= 5 then 'L' else '#'
+                                 x   -> x
+
+    nextmap :: SeatMap -> SeatMap
+    nextmap seatmap = M.fromList [ (pos, nextseat seatmap pos) | pos <- M.keys seatmap ]
 
 
 
