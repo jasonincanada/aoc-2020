@@ -98,7 +98,7 @@ count :: Int -> (SeatMap -> Pos -> [Kind]) -> SeatMap -> Int
 count l getneighbours = recurse nextmap final
   where
     nextmap :: SeatMap -> SeatMap
-    nextmap seatmap = M.fromList [ (pos, nextseat seatmap pos) | pos <- M.keys seatmap ]
+    nextmap seatmap = M.mapWithKey (const . nextseat seatmap) seatmap
 
     nextseat :: SeatMap -> Pos -> Char
     nextseat seatmap pos = let cell    = seatmap M.! pos
