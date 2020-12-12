@@ -44,7 +44,7 @@ parse = M.fromList
 calc1 :: Input -> Output
 calc1 seatmap = Output result
   where
-    result     = count 4 seatmap getneighbours
+    result = count 4 seatmap getneighbours
 
     getneighbours :: SeatMap -> Pos -> [Kind]
     getneighbours seatmap pos = mapMaybe (`M.lookup` seatmap) (neighbours pos)
@@ -92,7 +92,7 @@ calc2 seatmap = Output result
                          in  case M.lookup next seatmap of
                                Nothing  -> Nothing
                                Just '.' -> go next (fr,fc)
-                               Just x   -> Just x
+                               Just  x  -> Just x
 
         rays :: [Ray]
         rays = [ (sub,sub), (sub,nop), (sub,add),
