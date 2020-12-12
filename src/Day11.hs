@@ -5,7 +5,7 @@ module Day11 where
 {-  Advent of Code 2020 - Day 11 - https://adventofcode.com/2020/day/11 -}
 
 import qualified Data.Map.Strict as M
-import Data.Bifunctor (first)
+import Data.Bifunctor (bimap, first)
 import Data.Maybe     (mapMaybe)
 
 
@@ -50,10 +50,8 @@ calc1 seatmap = Output result
     getneighbours seatmap pos = mapMaybe (flip M.lookup seatmap) (neighbours pos)
 
     neighbours :: Pos -> [Pos]
-    neighbours pos = map (add pos) offsets
+    neighbours (row,col) = bimap (+row) (+col) <$> offsets
       where
-        add (row,col) (dr,dc) = (row+dr,col+dc)
-
         offsets = [ (-1,-1), (-1,0), (-1,1),
                     ( 0,-1),         ( 0,1),
                     ( 1,-1), ( 1,0), ( 1,1) ]
@@ -90,11 +88,11 @@ calc2 seatmap = Output result
     hits seatmap pos = mapMaybe (go pos) rays
       where
         go :: Pos -> Ray -> Maybe Kind
-        go (row,col) (fr,fc) = let next = (fr row, fc col)
-                               in  case M.lookup next seatmap of
-                                     Nothing  -> Nothing
-                                     Just '.' -> go next (fr,fc)
-                                     Just x   -> Just x
+        go pos (fr,fc) = let next = bimap fr fc pos
+                         in  case M.lookup next seatmap of
+                               Nothing  -> Nothing
+                               Just '.' -> go next (fr,fc)
+                               Just x   -> Just x
 
         rays :: [Ray]
         rays = [ (sub,sub), (sub,nop), (sub,add),
