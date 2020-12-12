@@ -45,9 +45,6 @@ calc1 :: Input -> Output
 calc1 seatmap = Output result
   where
     result     = count 4 seatmap getneighbours
-    offsets    = [ (-1,-1), (-1,0), (-1,1),
-                   ( 0,-1),         ( 0,1),
-                   ( 1,-1), ( 1,0), ( 1,1) ]
 
     getneighbours :: SeatMap -> Pos -> [Kind]
     getneighbours seatmap pos = mapMaybe (flip M.lookup seatmap) (neighbours pos)
@@ -56,6 +53,10 @@ calc1 seatmap = Output result
     neighbours pos = map (add pos) offsets
       where
         add (row,col) (dr,dc) = (row+dr,col+dc)
+
+        offsets = [ (-1,-1), (-1,0), (-1,1),
+                    ( 0,-1),         ( 0,1),
+                    ( 1,-1), ( 1,0), ( 1,1) ]
 
 
 count :: Int -> SeatMap -> (SeatMap -> Pos -> [Kind]) -> Int
