@@ -84,25 +84,35 @@ calc2 seatmap = Output result
             nop = (+0)
 
 
-count :: Int -> (SeatMap -> Pos -> [Kind]) -> SeatMap -> Int
-count l getneighbours seatmap = let seatmap' = nextmap
-                                in  if seatmap == seatmap'
-                                    then M.size $ M.filter (=='#') seatmap
-                                    else count l getneighbours seatmap'
+-- keep iterating a function on a value until it doesn't change from its previous value,
+-- then run a finalizing function on the last value
+recurse :: Eq a => (a -> a) -> (a -> b) -> a -> b
+recurse next final a
+  | a == a'   = final a
+  | otherwise = recurse next final a'
   where
-    nextmap :: SeatMap
-    nextmap = M.fromList [ (pos, nextseat pos) | pos <- M.keys seatmap ]
+    a' = next a
 
-    nextseat :: Pos -> Char
-    nextseat pos = let cell    = seatmap M.! pos
-                       neighbs = getneighbours seatmap pos
-                       empty   = filter (=='L') neighbs
-                       occup   = filter (=='#') neighbs
-                   in  case cell of
-                         'L' -> if null occup        then '#' else 'L'
-                         '#' -> if length occup >= l then 'L' else '#'
-                         x   -> x
 
+count :: Int -> (SeatMap -> Pos -> [Kind]) -> SeatMap -> Int
+count l getneighbours = recurse nextmap final
+  where
+    nextmap :: SeatMap -> SeatMap
+    nextmap seatmap = M.fromList [ (pos, nextseat seatmap pos) | pos <- M.keys seatmap ]
+
+    nextseat :: SeatMap -> Pos -> Char
+    nextseat seatmap pos = let cell    = seatmap M.! pos
+                               neighbs = getneighbours seatmap pos
+                               empty   = filter (=='L') neighbs
+                               occup   = filter (=='#') neighbs
+                           in  case cell of
+                                 'L' -> if null occup        then '#' else 'L'
+                                 '#' -> if length occup >= l then 'L' else '#'
+                                 x   -> x
+
+    -- count the number of occupied seats
+    final :: SeatMap -> Int
+    final = M.size . M.filter (=='#')
 
 
 {- Operations -}
