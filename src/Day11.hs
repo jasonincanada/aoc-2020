@@ -31,11 +31,11 @@ instance Show Output where
 parse :: String -> Input
 parse = M.fromList
           . concat
-          . zipWith (curry push) [0..]
+          . zipWith push [0..]
           . map (zip [0..])
           . lines
   where
-    push (n,list) = map (first (n,)) list
+    push n = map (first (n,))
 
 
 
