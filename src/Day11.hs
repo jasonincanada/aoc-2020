@@ -44,16 +44,10 @@ parse = M.fromList
 calc1 :: Input -> Output
 calc1 seatmap = Output result
   where
-    result     = go seatmap
+    result     = count seatmap nextseat
     offsets    = [ (-1,-1), (-1,0), (-1,1),
                    ( 0,-1),         ( 0,1),
                    ( 1,-1), ( 1,0), ( 1,1) ]
-
-    go :: SeatMap -> Int
-    go seatmap = let seatmap' = nextmap seatmap
-                 in  if seatmap == seatmap'
-                     then M.size $ M.filter (=='#') seatmap
-                     else go seatmap'
 
     neighbours :: Pos -> [Pos]
     neighbours pos = map (add pos) offsets
@@ -70,8 +64,15 @@ calc1 seatmap = Output result
                                  '#' -> if length occup >= 4 then 'L' else '#'
                                  x   -> x
 
-    nextmap :: SeatMap -> SeatMap
-    nextmap seatmap = M.fromList [ (pos, nextseat seatmap pos) | pos <- M.keys seatmap ]
+
+nextmap :: SeatMap -> (SeatMap -> Pos -> Char) -> SeatMap
+nextmap seatmap nextseat = M.fromList [ (pos, nextseat seatmap pos) | pos <- M.keys seatmap ]
+
+count :: SeatMap -> (SeatMap -> Pos -> Char) -> Int
+count seatmap nextseat = let seatmap' = nextmap seatmap nextseat
+                         in  if seatmap == seatmap'
+                             then M.size $ M.filter (=='#') seatmap
+                             else count seatmap' nextseat
 
 
 type Ray = (Int->Int, Int->Int)
@@ -79,13 +80,7 @@ type Ray = (Int->Int, Int->Int)
 calc2 :: Input -> Output
 calc2 seatmap = Output result
   where
-    result     = go seatmap
-
-    go :: SeatMap -> Int
-    go seatmap = let seatmap' = nextmap seatmap
-                 in  if seatmap == seatmap'
-                     then M.size $ M.filter (=='#') seatmap
-                     else go seatmap'
+    result = count seatmap nextseat
 
     hits :: SeatMap -> Pos -> [Kind]
     hits seatmap pos = mapMaybe (go pos) rays
@@ -117,8 +112,6 @@ calc2 seatmap = Output result
                                  '#' -> if length occup >= 5 then 'L' else '#'
                                  x   -> x
 
-    nextmap :: SeatMap -> SeatMap
-    nextmap seatmap = M.fromList [ (pos, nextseat seatmap pos) | pos <- M.keys seatmap ]
 
 
 
