@@ -13,6 +13,8 @@ import Day09
 import Day10
 import Day11
 import Day12
+import Day15
+import Day16
 
 
 path = "test/inputs/"
@@ -160,4 +162,18 @@ main = hspec $ do
     it "Part 1" $ do
       file <- readFile (path ++ "12.txt")
       (Day12.parse >>> Day12.calc1 >>> show) file `shouldBe` "25"
+
+
+  describe "Day15" $ do
+
+    it "Part 1" $ do
+      file <- readFile (path ++ "15.txt")
+      (Day15.parse >>> Day15.calc1 >>> show) file `shouldBe` "436"
+
+
+  describe "Day16" $ do
+
+    it "Part 1" $ do
+      file <- readFile (path ++ "16.txt")
+      (Day16.parse >>> Day16.calc1 >>> show) file `shouldBe` "71"
 
