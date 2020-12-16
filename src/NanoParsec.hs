@@ -105,10 +105,18 @@ run m s =
     _           -> error "Parser error."
 
 
--- I added this
+-- I added these
 try :: Parser a -> String -> Maybe a
 try m s =
   case parse m s of
     [(res, [])] -> Just res
     _           -> Nothing
+
+upto :: Char -> Parser [Char]
+upto c = do
+  this <- item
+
+  if this == c
+  then pure []
+  else (this:) <$> upto c
 
