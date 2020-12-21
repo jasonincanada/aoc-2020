@@ -57,7 +57,7 @@ calc1 tiles = Output result
     result  = product $ map fst corners
     corners = filter (iscorner . matches) tiles
     
-    -- a corner is a tile that has only 2 other matching tiles (the rest will have 3)
+    -- a corner is a tile that has only 2 other matching tiles (the rest will have 3 or 4)
     iscorner :: [Tile] -> Bool
     iscorner matches = length matches == 2
 
