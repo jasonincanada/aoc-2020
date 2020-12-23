@@ -1,10 +1,10 @@
 module Main where
 
-import Day20 (part1, part2)
+import Day22 (part1, part2)
 
 main :: IO ()
 main = do
-  input <- readFile "inputs/20.txt"
+  input <- readFile "inputs/22.txt"
   putStrLn $ part1 input
   putStrLn $ part2 input
 

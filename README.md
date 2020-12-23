@@ -6,6 +6,7 @@ Don't forget to visit the Advent of Code sub-reddit for discussions and other pa
 
 Day | Title | Description
 --- | --- | ---
+22 | [Crab Combat](./src/Day22.hs) | Play a game of cards between two players
 20 | [Jurassic Jigsaw](./src/Day20.hs) | Reconstruct a tiled square and look for sea monsters
 16 | [Ticket Translation](./src/Day16.hs) | Process list of tickets
 12 | [Rain Risk](./src/Day12.hs) | Calculate ship movements/positions
