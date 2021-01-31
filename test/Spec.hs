@@ -13,9 +13,9 @@ import Day09
 import Day10
 import Day11
 import Day12
-import Day15
+--import Day15
 import Day16
-import Day18
+--import Day18
 import Day20
 import Day22
 import Day25
@@ -168,11 +168,13 @@ main = hspec $ do
       (Day12.parse >>> Day12.calc1 >>> show) file `shouldBe` "25"
 
 
+  {-
   describe "Day15" $ do
 
     it "Part 1" $ do
       file <- readFile (path ++ "15.txt")
       (Day15.parse >>> Day15.calc1 >>> show) file `shouldBe` "436"
+  -}
 
 
   describe "Day16" $ do
@@ -182,11 +184,13 @@ main = hspec $ do
       (Day16.parse >>> Day16.calc1 >>> show) file `shouldBe` "71"
 
 
+  {-
   describe "Day18" $ do
 
     it "Part 1" $ do
       file <- readFile (path ++ "18.txt")
       (Day18.parse >>> Day18.calc1 >>> show) file `shouldBe` "51"
+  -}
 
 
   describe "Day20" $ do
@@ -195,9 +199,11 @@ main = hspec $ do
       file <- readFile (path ++ "20.txt")
       (Day20.parse >>> Day20.calc1 >>> show) file `shouldBe` "20899048083289"
 
+    {-
     it "Part 2" $ do
       file <- readFile (path ++ "20.txt")
       (Day20.parse >>> Day20.calc2 >>> show) file `shouldBe` "273"
+    -}
 
 
   describe "Day22" $ do

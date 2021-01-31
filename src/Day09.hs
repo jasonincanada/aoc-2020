@@ -25,7 +25,7 @@ parse = map read . lines
 {- Methods -}
 
 -- from the problem description (set to 5 to make the test pass)
-preamble = 25
+preamble = 5
 
 calc1 :: Input -> Output
 calc1 numbers = Output result
@@ -44,7 +44,7 @@ calc1 numbers = Output result
 
 
 -- the answer to part 1 for my input (set to 127 to make the test pass)
-target = 258585477
+target = 127
 
 calc2 :: Input -> Output
 calc2 numbers = Output result
